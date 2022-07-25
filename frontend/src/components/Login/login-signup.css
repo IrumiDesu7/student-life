@@ -1,0 +1,30 @@
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.login-image {
+  max-width: 100vw;
+}
+.right-side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+@media screen and (min-width: 426px) {
+  .login-container {
+    flex-direction: row;
+    gap: 70px;
+    margin-left: 100px;
+  }
+  .login-image {
+    min-height: 50vh;
+  }
+}
