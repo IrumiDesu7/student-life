@@ -20,7 +20,12 @@ function Signup() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(signupData);
+    const { password, passwordConfirm } = signupData;
+    if (password === passwordConfirm) {
+      console.log(signupData);
+    } else {
+      console.log("password isn't the same");
+    }
   }
 
   return (
@@ -64,7 +69,7 @@ function Signup() {
             required
             placeholder='Confirm your password'
             onChange={handleChange}
-            value={signupData.password}
+            value={signupData.passwordConfirm}
           />
           <button className='login-btn'>Signup</button>
         </form>
