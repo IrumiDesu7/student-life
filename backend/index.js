@@ -20,7 +20,7 @@ app.post('/api/signup', (req, res) => {
   const data = {
     email : req.body.email,
     password : req.body.password,
-    password2 : req.body.password2,
+    passwordConfirm : req.body.passwordConfirm,
   }
   return res.send(data)
 })
