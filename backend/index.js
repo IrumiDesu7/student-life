@@ -2,6 +2,8 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 const cors = require('cors')
+const { checkValidtoAddUser } = require('./middleware/user')
+const { User } = require('./model/user')
 const port = 4000
 
 app.use(cors())
@@ -18,13 +20,17 @@ app.get('/api/login', (req, res) => {
   return res.send(data)
 })
 
-app.post('/api/signup', (req, res) => {
+app.post('/api/signup', checkValidtoAddUser, async (req, res) => {
   const data = {
     email : req.body.email,
     password : req.body.password,
-    passwordConfirm : req.body.passwordConfirm,
   }
-  return res.send(data)
+
+  const newUser = await new User(data)
+  newUser.save()
+  return res.send({
+    msg : 'Signup Successfully'
+  })
 })
 
 app.listen(port, () => {
