@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import './login-signup.css';
 
 function Login() {
@@ -24,16 +25,23 @@ function Login() {
 
   return (
     <div className='login-container'>
-      <img className='login-image' src='images/loginImage.png' alt='students' />
+      <img
+        className='login-image'
+        src='images/login-image.jpg'
+        alt='students'
+      />
       <div className='right-side'>
-        <h3>Student Life</h3>
-        <p>Welcome, students!</p>
+        <h3 className='login-title'>Student Life</h3>
+        <p className='login-description'>
+          Welcome, students! Enter your credentials to access this website
+        </p>
         <form onSubmit={handleSubmit} className='form-container'>
           <label htmlFor='email'>Email</label>
           <input
             type='email'
             name='email'
             id='email'
+            placeholder='Enter your email'
             required={true}
             onChange={handleChange}
             value={loginData.email}
@@ -44,11 +52,15 @@ function Login() {
             name='password'
             id='password'
             required
+            placeholder='Enter your password'
             onChange={handleChange}
             value={loginData.password}
           />
-          <button>Login</button>
+          <button className='login-btn'>Login</button>
         </form>
+        <p>
+          If you're new, create your account <Link to='/signup'>here</Link>!
+        </p>
       </div>
     </div>
   );
