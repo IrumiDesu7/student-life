@@ -24,7 +24,7 @@ function Signup() {
     const { password, passwordConfirm } = signupData;
     if (password === passwordConfirm) {
       axios
-        .post('http://localhost:5000/api/signup', signupData)
+        .post('http://localhost:4000/api/signup', signupData)
         .then((res) => console.log(res));
     } else {
       console.log("password isn't the same");
