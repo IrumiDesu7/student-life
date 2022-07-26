@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 function Signup() {
   const [signupData, setSignupData] = useState({
@@ -22,7 +23,9 @@ function Signup() {
     e.preventDefault();
     const { password, passwordConfirm } = signupData;
     if (password === passwordConfirm) {
-      console.log(signupData);
+      axios
+        .post('http://localhost:5000/api/signup', signupData)
+        .then((res) => console.log(res));
     } else {
       console.log("password isn't the same");
     }
