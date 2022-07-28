@@ -1,3 +1,4 @@
+const jwt = require('jsonwebtoken')
 const { check, validationResult } = require('express-validator')
 const { User } = require('../model/user')
 
@@ -18,12 +19,19 @@ const checkValidtoAddUser = [
         const errors = validationResult(req)
         // return res.send(errors)
         if (errors.isEmpty()) return next()
-        return res.send({
-            errors
-        })
+        return res.status(400).send(errors)
     }
 ]
 
+const verifyToken = (req, res, next) => {
+    let token = req.headers['x-access-token']
+    jwt.verify(token, 'SECRET', function(err, decoded) {
+        if (err) return res.status(500).send('Invalid Token')
+        next()
+    })
+}
+
 module.exports = {
-    checkValidtoAddUser
+    checkValidtoAddUser,
+    verifyToken
 }
