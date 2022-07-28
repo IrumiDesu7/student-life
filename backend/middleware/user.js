@@ -2,7 +2,7 @@ const { check, validationResult } = require('express-validator')
 const { User } = require('../model/user')
 
 const checkValidtoAddUser = [
-    check('email').isEmail().custom( async (value, {req}) => {
+    check('email').isEmail().bail().custom( async (value, {req}) => {
         const email = await User.find({email : value})
         if (email.length !== 0) throw new Error('Email is Already to Used')
         return true 
