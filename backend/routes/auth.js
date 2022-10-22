@@ -21,13 +21,14 @@ router.post('/api/login', async (req, res) => {
     })
     if (!user) return res.status(400).send('Email not Found')
 
-    if (! await bcrypt.compare(req.body.password, user.password)) return res.status(401).send('Password is Wrong')
+    if (! await bcrypt.compare(req.body.password, user.password)) return res.status(401).send({
+        status : 'error',
+        msg : 'Password is Wrong'
+    })
 
     let token = jwt.sign({
         user
     }, 'SECRET')
-    // res.cookie('x-access-token', token)
-    // res.setHeader('x-access-token', token)
     return res.send({
         msg : 'Login Successfully',
         id : user.id,
@@ -45,7 +46,10 @@ router.post('/api/register', checkValidtoAddUser, async (req, res) => {
 
     const newUser = new User(data)
     await newUser.save()
-    return res.send('Signup Successfully')
+    return res.send({
+        status : 'success',
+        msg : 'Signup Successfully'
+    })
 })
 
 module.exports = router
