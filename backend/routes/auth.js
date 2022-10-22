@@ -7,7 +7,12 @@ const { User } = require('../model/user')
 const router = express.Router()
 
 router.get('/api/post', verifyToken, async (req, res) => {
-    return res.send(token)
+    return res.send('Login')
+})
+
+router.post('/api/logout', verifyToken, async (req, res) => {
+    res.clearCookie('x-access-token')
+    return res.status(200).send('Logout Successfull')
 })
 
 router.post('/api/login', async (req, res) => {
@@ -21,21 +26,25 @@ router.post('/api/login', async (req, res) => {
     let token = jwt.sign({
         user
     }, 'SECRET')
+    // res.cookie('x-access-token', token)
+    // res.setHeader('x-access-token', token)
     return res.send({
-        message : 'Login Successfully',
-        token
+        msg : 'Login Successfully',
+        id : user.id,
+        email : user.email,
+        jwt : token
     })
 })
   
-router.post('/api/signup', checkValidtoAddUser, async (req, res) => {
+router.post('/api/register', checkValidtoAddUser, async (req, res) => {
     const salt = bcrypt.genSaltSync(10)
     const data = {
         email : req.body.email,
         password : bcrypt.hashSync(req.body.password, salt),
     }
 
-    const newUser = await new User(data)
-    newUser.save()
+    const newUser = new User(data)
+    await newUser.save()
     return res.send('Signup Successfully')
 })
 
